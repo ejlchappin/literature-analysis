@@ -1,6 +1,5 @@
 #!/bin/bash
 
-#correct secondary and run again.
 #remove headers from scopus files
 for f in scopus*.csv
 do
@@ -9,17 +8,12 @@ done
 
 #make one file with all scopus results
 cat temp_noheader_scopus* > temp_csv_complete.csv
-
 echo Found `cat temp_csv_complete.csv | wc -l` publications.
 
 #resolve commas in files, make it tab delimited.
 cat temp_csv_complete.csv | awk -F\" '{for(i=1;i<=NF;i+=2) {gsub(",", "\t", $i)}}1' > temp_csv_tabbed
 
-# split the complete csv in files per publication 
-#split -d -l 1 -a 4 temp_csv_tabbed temp_csv_split
-
 # delete the previous edgelist.
-#rm authors-primaryonly.edges
 rm authors.edges
 
 # store the authors (column 1), and the ref's (column 23) and remove leading and trailing white spaces.
@@ -40,26 +34,14 @@ echo `cat temp_authors_long | wc -l` "to process"
 touch temp_authors
 while read x
 do         
-   #echo $x
-
-#TODO: For the sed version on Mac, add \'$' before \n, otherwise newline does not work.
-   first=`echo $x | sed 's/,/\'$'\n/g' | sed -n 1p`
-   second=`echo $x | sed 's/,/\'$'\n/g' | sed -n 2p`
-   third=`echo $x | sed 's/,/\'$'\n/g' | sed -n 3p`
-   fourth=`echo $x | sed 's/,/\'$'\n/g' | sed -n 4p`
-   fifth=`echo $x | sed 's/,/\'$'\n/g' | sed -n 5p`
-   sixth=`echo $x | sed 's/,/\'$'\n/g' | sed -n 6p`
-   seventh=`echo $x | sed 's/,/\'$'\n/g' | sed -n 7p`
-   eigth=`echo $x | sed 's/,/\'$'\n/g' | sed -n 8p`
-
-#   first=`echo $x | sed 's/,/\n/g' | sed -n 1p`
-#   second=`echo $x | sed 's/,/\n/g' | sed -n 2p`
-#   third=`echo $x | sed 's/,/\n/g' | sed -n 3p`
-#   fourth=`echo $x | sed 's/,/\n/g' | sed -n 4p`
-#   fifth=`echo $x | sed 's/,/\n/g' | sed -n 5p`
-#   sixth=`echo $x | sed 's/,/\n/g' | sed -n 6p`
-#   seventh=`echo $x | sed 's/,/\n/g' | sed -n 7p`
-#   eigth=`echo $x | sed 's/,/\n/g' | sed -n 8p`
+   first=`echo $x | sed 's/,/\n/g' | sed -n 1p`
+   second=`echo $x | sed 's/,/\n/g' | sed -n 2p`
+   third=`echo $x | sed 's/,/\n/g' | sed -n 3p`
+   fourth=`echo $x | sed 's/,/\n/g' | sed -n 4p`
+   fifth=`echo $x | sed 's/,/\n/g' | sed -n 5p`
+   sixth=`echo $x | sed 's/,/\n/g' | sed -n 6p`
+   seventh=`echo $x | sed 's/,/\n/g' | sed -n 7p`
+   eigth=`echo $x | sed 's/,/\n/g' | sed -n 8p`
 
    # for each author combination, store author \tab author in the temp_authors list
    if [ -n "$first" ]; then 	
@@ -108,12 +90,9 @@ do
    fi
 done < temp_authors_long
 
-#TODO renamed
 #remove leading and trailing spaces, replace inner spaces by dashes.
-#cat temp_authors | sed -e 's/^ *//g;s/ *$//g' | sed 's/\ /-/g' > authors-primaryonly.edges
 cat temp_authors | sed -e 's/^ *//g;s/ *$//g' | sed 's/\ /-/g' > authors.edges
 
 echo Created an list with `cat authors.edges | wc -l` edges between authors.
-#echo Created an list with `cat authors-primaryonly.edges | wc -l` edges between authors.
 rm temp*
 

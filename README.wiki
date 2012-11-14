@@ -1,17 +1,17 @@
-Scripts to analyse a body of literature
+== Scripts to analyse a the network in a body of literature (linux) ==
 
-Step 1. Search in Scopus
+=== Step 1. Search in Scopus ===
 * Use the document search to query for a number of search terms in titles,
 abstracts and keywords, where the search terms are separated with AND.
 * Select all documents found and use the export function. Select the complete
 format and export to a csv file.
 
-Step 2. Use the scripts to reformat the resulting csv file to generate an overview of authors, papers and keywords.
+=== Step 2. Use the scripts to reformat the resulting csv file to generate an overview of authors, papers and keywords. ===
 * Use generateAuthorOverview.sh to give an overview of the authors. The resulting .edges file contains an overview of the links between authors.
 * Use generateDocumentOverview.sh to give an overview of the documents. The resulting .edges file contains an overview of the citation links between documents.
 * Use generateKeywordOverview.sh to give an overview of the keywords listed. The resulting .edges file contains an overview of the keywords that are mentioned together. The keywords-count.txt files gives an ordered count of the keywords. 
 
-Step 3. Harmonise the result in Google Refine
+=== Step 3. Harmonise the result in Google Refine ===
 * The result may need to be improved to resolve unmatched duplicates with Google Refine. 
 * Especially authors and documents need to be checked, because the same author and documents have different identifiers (for example ‘Nelson, R.’ and ‘Nelson, R.R.’).
 * Use the Cluster and edit function to find similar values and determine which should be duplicates. There are various clustering algorithms implemented.
@@ -20,7 +20,7 @@ Step 3. Harmonise the result in Google Refine
 * Use the Facet by Blank function to deselect empty cells.
 * Export the result as a tab-separated file.
 
-Step 4. Visualise and explore literature network with Gephi.
+=== Step 4. Visualise and explore literature network with Gephi. ===
 * All three lists are imported in Gephi to study the network.
 * Check by hand for duplicate nodes and use the Merge nodes function.
 * Remove erroneous nodes (such as commas only, or ‘from china’).

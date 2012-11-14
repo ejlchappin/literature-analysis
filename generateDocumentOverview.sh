@@ -38,5 +38,4 @@ done
 
 # remove all temp files.
 rm temp*
-
 echo Created an list with `cat edgelist.edges | wc -l` edges between publications.
